@@ -1,7 +1,9 @@
 /* ============================================ */
 /* CREATIVE STUDIO - ESTILOS CSS CORREGIDOS */
 /* ============================================ */
-
+html, body {
+    overflow-x: hidden;
+}
 /* Variables CSS */
 :root {
     --primary-color: #6366f1;
