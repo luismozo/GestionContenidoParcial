@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Agencia de diseño web minimalista y funcional para pequeñas empresas.">
+    <title>Creative Studio - Diseño Web Profesional</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <div id="loader" class="loader">
+        <div class="loader-spinner"></div>
+        <p>Cargando Creative Studio...</p>
+    </div>
+
+    <div id="particles"></div>
+
+    <header>
+        <div class="container nav">
+            <div class="logo">Creative Studio</div>
+            <nav class="desktop-nav">
+                <a href="#hero" class="nav-link">Inicio</a>
+                <a href="#services" class="nav-link">Servicios</a>
+                <a href="#portfolio" class="nav-link">Portafolio</a>
+                <a href="#about" class="nav-link">Nosotros</a>
+                <a href="#testimonials" class="nav-link">Testimonios</a>
+                <a href="#contact" class="nav-link">Contacto</a>
+            </nav>
+            <div class="mobile-menu-btn" id="mobile-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav class="mobile-nav" id="mobile-nav">
+            <a href="#hero" class="nav-link">Inicio</a>
+            <a href="#services" class="nav-link">Servicios</a>
+            <a href="#portfolio" class="nav-link">Portafolio</a>
+            <a href="#about" class="nav-link">Nosotros</a>
+            <a href="#testimonials" class="nav-link">Testimonios</a>
+            <a href="#contact" class="nav-link">Contacto</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="hero-bg"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        <span class="typed-text"></span>
+                        <span class="cursor">|</span>
+                    </h1>
+                    <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="500">Ayudamos a pequeñas empresas a crecer con sitios web responsive, funcionales y atractivos, utilizando diseño minimalista y tecnologías modernas.</p>
+                    <div class="hero-buttons" data-aos="fade-up" data-aos-delay="700">
+                        <a href="#contact" class="btn btn-primary">Comienza Tu Proyecto</a>
+                        <a href="#services" class="btn btn-secondary">Ver Servicios</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="floating-card" data-tilt>
+                        <div class="code-lines">
+                            <div class="line"></div>
+                            <div class="line"></div>
+                            <div class="line"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-aos="fade-up">Nuestros Servicios</h2>
+                    <p data-aos="fade-up" data-aos-delay="200">Soluciones completas para tu presencia digital</p>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card" data-tilt data-aos="fade-up" data-aos-delay="300">
+                        <div class="service-icon">💻</div>
+                        <h3>Desarrollo Web</h3>
+                        <p>Creamos sitios web personalizados con buenas prácticas de accesibilidad y optimización para motores de búsqueda.</p>
+                        <div class="service-features">
+                            <span>Responsive Design</span>
+                            <span>SEO Optimizado</span>
+                            <span>Carga Rápida</span>
+                        </div>
+                    </div>
+                    <div class="service-card" data-tilt data-aos="fade-up" data-aos-delay="400">
+                        <div class="service-icon">🎨</div>
+                        <h3>Diseño UI/UX</h3>
+                        <p>Focados en experiencias intuitivas que convierten visitantes en clientes fieles.</p>
+                        <div class="service-features">
+                            <span>Interfaz Intuitiva</span>
+                            <span>User Research</span>
+                            <span>Prototipos</span>
+                        </div>
+                    </div>
+                    <div class="service-card" data-tilt data-aos="fade-up" data-aos-delay="500">
+                        <div class="service-icon">🔍</div>
+                        <h3>Optimización SEO</h3>
+                        <p>Aumentamos tu visibilidad en línea para atraer más tráfico y mejorar conversiones.</p>
+                        <div class="service-features">
+                            <span>Análisis Keywords</span>
+                            <span>Content Strategy</span>
+                            <span>Link Building</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-aos="fade-up">Nuestro Portafolio</h2>
+                    <p data-aos="fade-up" data-aos-delay="200">Algunos de nuestros trabajos recientes</p>
+                </div>
+                <div class="portfolio-filter" data-aos="fade-up" data-aos-delay="300">
+                    <button class="filter-btn active" data-filter="all">Todos</button>
+                    <button class="filter-btn" data-filter="web">Desarrollo Web</button>
+                    <button class="filter-btn" data-filter="design">Diseño</button>
+                    <button class="filter-btn" data-filter="branding">Branding</button>
+                </div>
+                <div class="portfolio-grid" id="portfolio-grid">
+                    </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="about-bg"></div>
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text" data-aos="fade-right">
+                        <div class="section-header">
+                            <h2>Sobre Creative Studio</h2>
+                            <p>Transformamos ideas en realidades digitales</p>
+                        </div>
+                        <div class="about-description">
+                            <p>Somos un equipo apasionado con experiencia en el desarrollo de soluciones web efectivas, ayudando a más de 50 negocios locales a expandirse digitalmente mediante prácticas sostenibles y código limpio.</p>
+                            <p>Creemos en la combinación perfecta de forma y función, priorizando siempre la carga rápida y la compatibilidad multi-dispositivo.</p>
+                        </div>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="150">0</span>
+                                <span class="stat-label">Proyectos</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="50">0</span>
+                                <span class="stat-label">Clientes</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" data-target="3">0</span>
+                                <span class="stat-label">Años</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="about-visual" data-aos="fade-left">
+                        <div class="team-showcase">
+                            <div class="showcase-item" data-tilt>👥</div>
+                            <div class="showcase-item" data-tilt>💡</div>
+                            <div class="showcase-item" data-tilt>🚀</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-aos="fade-up">Lo Que Dicen Nuestros Clientes</h2>
+                    <p data-aos="fade-up" data-aos-delay="200">Testimonios reales de proyectos exitosos</p>
+                </div>
+                <div class="testimonials-slider" id="testimonials-slider">
+                    </div>
+                <div class="slider-controls">
+                    <button class="slider-btn" id="prev-btn" aria-label="Testimonio anterior">‹</button>
+                    <button class="slider-btn" id="next-btn" aria-label="Siguiente testimonio">›</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info" data-aos="fade-right">
+                        <div class="section-header">
+                            <h2>Contáctanos</h2>
+                            <p>Comencemos tu proyecto juntos</p>
+                        </div>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📧</div>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>hola@creativestudio.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📱</div>
+                                <div>
+                                    <h4>Teléfono</h4>
+                                    <p>+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div>
+                                    <h4>Ubicación</h4>
+                                    <p>Santa Marta, Colombia</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper" data-aos="fade-left">
+                        <form id="contact-form" class="contact-form" novalidate>
+                            <div class="form-group">
+                                <input type="text" id="name" name="name" placeholder="Tu Nombre" required>
+                                <span class="form-line"></span>
+                                <span class="error-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="email" name="email" placeholder="Tu Email" required>
+                                <span class="form-line"></span>
+                                <span class="error-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="subject" name="subject" placeholder="Asunto" required>
+                                <span class="form-line"></span>
+                                <span class="error-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <textarea id="message" name="message" placeholder="Tu Mensaje" rows="5" required></textarea>
+                                <span class="form-line"></span>
+                                <span class="error-message"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="submit-btn">
+                                <span class="btn-text">Enviar Mensaje</span>
+                                <div class="btn-loader" style="display: none;"></div>
+                            </button>
+                        </form>
+                        <div id="form-message" class="form-message"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">Creative Studio</div>
+                    <p>Diseñando el futuro digital, un proyecto a la vez.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Servicios</h4>
+                        <a href="#services">Desarrollo Web</a>
+                        <a href="#services">Diseño UI/UX</a>
+                        <a href="#services">SEO</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Empresa</h4>
+                        <a href="#about">Nosotros</a>
+                        <a href="#portfolio">Portafolio</a>
+                        <a href="#contact">Contacto</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Síguenos</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+                            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">💼</a>
+                            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Creative Studio. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scroll-top" class="scroll-top" aria-label="Volver arriba">↑</button>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
