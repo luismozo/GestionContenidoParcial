@@ -553,4 +553,346 @@ function initializeThemeToggle() {
     }
 
     themeToggle.addEventListener('click', toggleTheme);
+
+    class ResponsiveManager {
+    constructor() {
+        this.init();
+        this.bindEvents();
+    }
+
+    init() {
+        this.preventZoom();
+        this.handleViewportChanges();
+        this.fixMobileVH();
+        this.optimizePerformance();
+    }
+
+    bindEvents() {
+        // Eventos para cambios de orientación y redimensionamiento
+        window.addEventListener('orientationchange', () => {
+            setTimeout(() => {
+                this.fixMobileVH();
+                this.checkOverflow();
+            }, 100);
+        });
+
+        window.addEventListener('resize', this.debounce(() => {
+            this.handleResize();
+            this.checkOverflow();
+        }, 250));
+
+        // Prevenir zoom en inputs (iOS Safari)
+        this.preventInputZoom();
+        
+        // Manejo de scroll y navegación móvil
+        this.handleMobileNavigation();
+    }
+
+    // Prevenir zoom en dispositivos móviles
+    preventZoom() {
+        // Gestos táctiles
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(event => {
+            document.addEventListener(event, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }, { passive: false });
+        });
+
+        // Rueda del mouse + Ctrl
+        document.addEventListener('wheel', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Atajos de teclado
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && 
+                ['+', '-', '=', '0'].includes(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        // Doble tap en móviles
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', (event) => {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, { passive: false });
+    }
+
+    // Prevenir zoom al hacer focus en inputs
+    preventInputZoom() {
+        const inputs = document.querySelectorAll('input, textarea, select');
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    const original = viewport.content;
+                    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                    
+                    input.addEventListener('blur', () => {
+                        setTimeout(() => {
+                            viewport.content = original;
+                        }, 300);
+                    }, { once: true });
+                }
+            });
+        });
+    }
+
+    // Fix para 100vh en móviles
+    fixMobileVH() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // Aplicar a elementos que usen 100vh
+        const fullHeightElements = document.querySelectorAll('.hero, .full-height');
+        fullHeightElements.forEach(el => {
+            el.style.minHeight = `calc(var(--vh, 1vh) * 100)`;
+        });
+    }
+
+    // Manejar cambios de viewport
+    handleViewportChanges() {
+        let resizeTimer;
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+        
+        const handleMediaQuery = (e) => {
+            if (e.matches) {
+                // Modo móvil
+                this.enableMobileOptimizations();
+            } else {
+                // Modo desktop
+                this.enableDesktopOptimizations();
+            }
+        };
+
+        mediaQuery.addEventListener('change', handleMediaQuery);
+        handleMediaQuery(mediaQuery);
+    }
+
+    enableMobileOptimizations() {
+        // Reducir animaciones en móviles para mejor rendimiento
+        document.body.classList.add('mobile-optimized');
+        
+        // Ajustar scroll behavior
+        document.documentElement.style.scrollBehavior = 'auto';
+        
+        // Optimizar imágenes lazy loading
+        this.optimizeImages();
+    }
+
+    enableDesktopOptimizations() {
+        document.body.classList.remove('mobile-optimized');
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }
+
+    // Optimizar rendimiento
+    optimizePerformance() {
+        // Lazy loading para imágenes
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                            imageObserver.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+
+    optimizeImages() {
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            if (!img.hasAttribute('loading')) {
+                img.setAttribute('loading', 'lazy');
+            }
+        });
+    }
+
+    // Manejo de navegación móvil
+    handleMobileNavigation() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isActive = mobileMenuBtn.classList.contains('active');
+                
+                if (isActive) {
+                    this.closeMobileNav();
+                } else {
+                    this.openMobileNav();
+                }
+            });
+
+            // Cerrar al hacer click en un enlace
+            const navLinks = mobileNav.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    this.closeMobileNav();
+                });
+            });
+
+            // Cerrar al hacer click fuera
+            document.addEventListener('click', (e) => {
+                if (!mobileNav.contains(e.target) && 
+                    !mobileMenuBtn.contains(e.target) && 
+                    mobileNav.classList.contains('show')) {
+                    this.closeMobileNav();
+                }
+            });
+        }
+    }
+
+    openMobileNav() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        mobileMenuBtn.classList.add('active');
+        mobileNav.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeMobileNav() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+        
+        mobileMenuBtn.classList.remove('active');
+        mobileNav.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    // Verificar elementos que se desbordan
+    checkOverflow() {
+        const elements = document.querySelectorAll('*');
+        const viewportWidth = window.innerWidth;
+        
+        elements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            
+            if (rect.width > viewportWidth || rect.right > viewportWidth) {
+                console.warn('Elemento con desbordamiento:', element);
+                element.classList.add('overflow-detected');
+                
+                // Auto-fix común
+                if (!element.style.maxWidth) {
+                    element.style.maxWidth = '100%';
+                    element.style.overflowX = 'hidden';
+                }
+            }
+        });
+    }
+
+    // Manejar redimensionamiento
+    handleResize() {
+        this.fixMobileVH();
+        this.updateContainerSizes();
+    }
+
+    updateContainerSizes() {
+        const containers = document.querySelectorAll('.container');
+        containers.forEach(container => {
+            // Asegurar que los contenedores no excedan el viewport
+            if (container.scrollWidth > window.innerWidth) {
+                container.style.maxWidth = '100vw';
+                container.style.overflowX = 'hidden';
+            }
+        });
+    }
+
+    // Utilidad debounce
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func.apply(this, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Detectar tipo de dispositivo
+    getDeviceType() {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return "tablet";
+        } else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return "mobile";
+        }
+        return "desktop";
+    }
+
+    // Método público para debug
+    debugMode() {
+        console.log('=== RESPONSIVE DEBUG INFO ===');
+        console.log('Device type:', this.getDeviceType());
+        console.log('Viewport size:', window.innerWidth + 'x' + window.innerHeight);
+        console.log('Device pixel ratio:', window.devicePixelRatio);
+        console.log('Orientation:', screen.orientation?.type || 'unknown');
+        
+        this.checkOverflow();
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    window.responsiveManager = new ResponsiveManager();
+    
+    // Agregar método debug global
+    window.debugResponsive = () => window.responsiveManager.debugMode();
+});
+
+// CSS adicional para JavaScript
+const additionalCSS = `
+.mobile-optimized * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+}
+
+.overflow-detected {
+    outline: 2px dashed red !important;
+    position: relative;
+}
+
+.overflow-detected::after {
+    content: "OVERFLOW";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    color: white;
+    font-size: 10px;
+    padding: 2px 4px;
+    z-index: 999999;
+}
+
+/* Fix para 100vh en móviles */
+.hero,
+.full-height {
+    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
+}
+`;
+
+// Inyectar CSS adicional
+const style = document.createElement('style');
+style.textContent = additionalCSS;
+document.head.appendChild(style);
 }
